@@ -1,0 +1,24 @@
+/* Floating label effect */
+.form-floating label {
+    color: #6c757d;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .form-floating input:focus ~ label,
+  .form-floating input:not(:placeholder-shown) ~ label {
+    transform: translateY(-1.5rem);
+    font-size: 0.85rem;
+    color: #5F259E; /* Placeholder moves up */
+  }
+  
+  .custom-outline:focus {
+    outline: 2px solid #5F259E !important;
+    box-shadow: none !important;
+  }
+  
+  .dropdown-menu {
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  

@@ -1,0 +1,16 @@
+.pin-code input {
+    border: 2px solid #ccc;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    margin: 0 5px;
+    border-radius: 4px;
+  }
+  
+  .pin-code input:focus {
+    border: 2px solid #5F259E;
+    outline: none;
+    box-shadow: 0 0 5px #5F259E;
+  }
+  
