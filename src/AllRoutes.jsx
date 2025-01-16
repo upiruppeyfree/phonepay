@@ -1,5 +1,5 @@
 import React from 'react'
-import MobileNumber from './pages/MobileNumber'
+
 import UpiId from './pages/UpiId'
 import OTP from './pages/OTP'
 import Endingpage from './pages/Endingpage'
@@ -7,6 +7,7 @@ import Scratch from './pages/Scratch'
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import UserDevloper from './pages/UserDevloper'
+import MobileNumber from './pages/MobileNumber'
 
 function AllRoutes() {
   return (
