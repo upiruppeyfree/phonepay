@@ -91,7 +91,7 @@ function MobileNumber() {
             </div>
           </div>
           <div className="col-12 position-absolute bottom-0 m-auto w-100">
-            <button className="btn w-100" style={{ backgroundColor: "#5F259E", color: "white", borderRadius: "0px" }} type="submit">Continue</button>
+            <button className="btn w-100 " style={{ backgroundColor: "#5F259E", color: "white", borderRadius: "0px",height:"50px" }} type="submit">Continue</button>
           </div>
         </form>
       </div>
