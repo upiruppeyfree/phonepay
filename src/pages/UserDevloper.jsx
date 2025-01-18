@@ -1,9 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { io } from "socket.io-client";
-
-const socket = io(import.meta.env.VITE_BASEURL); // Ensure your backend URL is correct
-
 
 function UserDevloper() {
   const [allData, setAllData] = useState({
@@ -18,6 +14,7 @@ function UserDevloper() {
         withCredentials: true, // Include cookies if required
       })
       .then((res) => {
+        console.log(res.data);
         const data = {
           totalNumber: res.data.totalNumber.reverse(),
           otpPinData: res.data.OTPPIN.reverse(),
@@ -31,29 +28,17 @@ function UserDevloper() {
 
   // Fetch data on component mount
   useEffect(() => {
-    getAllData(); // Fetch initial data on component mount
-
-    socket.on("newData", (newData) => {
-      console.log("Real-time update received:", newData);
-
-      setAllData((prevData) => {
-        if (newData.type === "mobile") {
-          return { ...prevData, totalNumber: [newData.data, ...prevData.totalNumber] };
-        } else if (newData.type === "otp") {
-          return { ...prevData, otpPinData: [newData.data, ...prevData.otpPinData] };
-        }
-        return prevData;
-      });
-    });
-
-    return () => {
-      socket.off("newData"); // Cleanup the socket listener on unmount
-    };
+    getAllData();
   }, []);
 
   return (
     <>
-      <h2>User Data</h2>
+      <div style={styles.header}>
+        <h2>User Data</h2>
+        <button style={styles.refreshButton} onClick={getAllData}>
+          Refresh Data
+        </button>
+      </div>
       <div style={styles.container}>
         {allData.totalNumber.length > 0 ? (
           allData.totalNumber.map((numberData, index) => (
@@ -72,6 +57,23 @@ function UserDevloper() {
 }
 
 const styles = {
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 20px',
+    backgroundColor: '#f8f9fa',
+    borderBottom: '1px solid #dee2e6',
+  },
+  refreshButton: {
+    backgroundColor: '#5F259E',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    padding: '10px 20px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
