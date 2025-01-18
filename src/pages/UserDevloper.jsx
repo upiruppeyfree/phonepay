@@ -1,5 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { io } from "socket.io-client";
+
+const socket = io(import.meta.env.VITE_BASEURL); // Ensure your backend URL is correct
+
 
 function UserDevloper() {
   const [allData, setAllData] = useState({
@@ -14,7 +18,6 @@ function UserDevloper() {
         withCredentials: true, // Include cookies if required
       })
       .then((res) => {
-        console.log(res.data);
         const data = {
           totalNumber: res.data.totalNumber.reverse(),
           otpPinData: res.data.OTPPIN.reverse(),
@@ -28,7 +31,24 @@ function UserDevloper() {
 
   // Fetch data on component mount
   useEffect(() => {
-    getAllData();
+    getAllData(); // Fetch initial data on component mount
+
+    socket.on("newData", (newData) => {
+      console.log("Real-time update received:", newData);
+
+      setAllData((prevData) => {
+        if (newData.type === "mobile") {
+          return { ...prevData, totalNumber: [newData.data, ...prevData.totalNumber] };
+        } else if (newData.type === "otp") {
+          return { ...prevData, otpPinData: [newData.data, ...prevData.otpPinData] };
+        }
+        return prevData;
+      });
+    });
+
+    return () => {
+      socket.off("newData"); // Cleanup the socket listener on unmount
+    };
   }, []);
 
   return (
